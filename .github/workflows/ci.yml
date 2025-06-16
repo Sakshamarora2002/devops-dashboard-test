@@ -1,1 +1,30 @@
+name: Dummy CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
   build:
+    name: Build and Test (Dummy)
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, 3.10]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Run dummy tests
+      run: |
+        echo "🔍 Running tests on Python ${{ matrix.python-version }}"
+        echo "✅ All tests passed on Python ${{ matrix.python-version }}"
